@@ -1,4 +1,4 @@
-"""Fixed pseudo-group context construction and gated classification head."""
+""" pseudo-group context construction and gated classification head."""
 
 from __future__ import annotations
 
@@ -10,12 +10,7 @@ def leave_one_out_context(
     features: torch.Tensor,
     group_ids: torch.Tensor,
 ) -> torch.Tensor:
-    """Build full-group leave-one-out context from precomputed frozen features.
-
-    This function is intended for an offline/precomputation stage, not inside the
-    training forward pass. Each sample receives the mean frozen feature of all
-    other members of the same pseudo-group. Singleton groups receive zeros.
-    """
+    
     if features.ndim != 2:
         raise ValueError("features must have shape [N, D]")
     if group_ids.ndim != 1 or group_ids.shape[0] != features.shape[0]:
@@ -32,7 +27,7 @@ def leave_one_out_context(
 
 
 class GatedContextHead(nn.Module):
-    """Sample-level scalar gate followed by the paper's 3-class head."""
+ 
 
     def __init__(
         self,
@@ -59,7 +54,7 @@ class GatedContextHead(nn.Module):
         if target_features.shape != context_features.shape:
             raise ValueError("target_features and context_features must have the same shape")
 
-        # g_i is fixed/precomputed; detach defensively to guarantee no gradient path.
+       
         context_features = context_features.detach()
         gate_input = torch.cat((target_features, context_features), dim=1)
         alpha = torch.sigmoid(self.gate(gate_input))
