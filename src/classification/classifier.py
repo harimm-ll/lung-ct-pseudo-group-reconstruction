@@ -1,4 +1,4 @@
-"""Complete pseudo-group context-aware classifier aligned with the paper."""
+""" pseudo-group context-aware classifier."""
 
 from __future__ import annotations
 
