@@ -1,4 +1,4 @@
-"""ResNet50 feature extractors used by the paper model."""
+"""ResNet50 feature extractors used by the model."""
 
 from __future__ import annotations
 
