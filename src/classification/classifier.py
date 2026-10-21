@@ -10,8 +10,7 @@ from .context_head import GatedContextHead
 
 
 class PseudoGroupContextClassifier(nn.Module):
-    """Fine-tuned target encoder + fixed precomputed pseudo-group context."""
-
+   
     def __init__(
         self,
         pretrained: bool = True,
@@ -32,6 +31,5 @@ class PseudoGroupContextClassifier(nn.Module):
         images: torch.Tensor,
         context_features: torch.Tensor,
     ) -> torch.Tensor:
-        """Predict from trainable target features and fixed cached context features."""
         target_features = self.backbone(images)
         return self.head(target_features, context_features)
