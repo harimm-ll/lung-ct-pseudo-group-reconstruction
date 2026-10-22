@@ -43,8 +43,6 @@ class FineTunedResNet50(nn.Module):
 
 
 class FrozenResNet50(nn.Module):
-    """Completely frozen ResNet50 used to build fixed pseudo-group context."""
-
     output_dim = 2048
 
     def __init__(self, pretrained: bool = True) -> None:
@@ -58,7 +56,6 @@ class FrozenResNet50(nn.Module):
         self.eval()
 
     def train(self, mode: bool = True) -> "FrozenResNet50":
-        # Context encoder must remain frozen/eval throughout training.
         super().train(False)
         return self
 
