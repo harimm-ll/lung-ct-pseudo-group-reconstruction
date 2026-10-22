@@ -170,7 +170,6 @@ The reconstruction implementation is organized into the following modules:
 - `singleton_expansion.py` — Preliminary singleton attachment.
 - `adaptive_edges.py` — Adaptive candidate relation selection.
 - `group_refinement.py` — Conservative group-level refinement.
-- `io.py` — Input/output utilities.
 
 ---
 
