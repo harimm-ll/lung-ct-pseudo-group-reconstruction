@@ -11,8 +11,8 @@ class FineTunedResNet50(nn.Module):
     """
     Shared ResNet50 backbone.
 
-    - All backbone parameters are frozen except layer4.
-    - The final residual stage (layer4) is trainable.
+    - All backbone parameters are frozen except the final residual block.
+    - Only layer4[2] is trainable.
     - All BatchNorm layers remain frozen.
     - The same backbone instance is used for target and context images.
     """
@@ -32,8 +32,8 @@ class FineTunedResNet50(nn.Module):
         for parameter in self.model.parameters():
             parameter.requires_grad_(False)
 
-        # Fine-tune only the final residual stage.
-        for parameter in self.model.layer4.parameters():
+        # Fine-tune only the final residual block in layer4.
+        for parameter in self.model.layer4[2].parameters():
             parameter.requires_grad_(True)
 
         # Keep all BatchNorm layers frozen.
@@ -50,7 +50,7 @@ class FineTunedResNet50(nn.Module):
     def train(self, mode: bool = True) -> "FineTunedResNet50":
         super().train(mode)
 
-
+        # Keep BatchNorm layers in evaluation mode.
         self._freeze_batch_norm()
 
         return self
