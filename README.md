@@ -140,12 +140,14 @@ The same overall pattern was independently reproduced on LIDC-IDRI using true ca
 
 The reconstructed pseudo-groups were further used to construct leave-one-out contextual representations for CT-slice classification.
 
+
 | Model | Accuracy | Macro-F1 |
 |---|---:|---:|
 | Image only | 0.7542 ± 0.0096 | 0.6412 ± 0.0479 |
-| Pseudo-group context w/o gate | 0.8603 ± 0.0137 | 0.8157 ± 0.0198 |
-| Random context + gate | 0.8063 ± 0.0175 | 0.7487 ± 0.0241 |
-| **Pseudo-group context + gate (Ours)** | **0.9079 ± 0.0108** | **0.8726 ± 0.0152** |
+| Pseudo-group context w/o gate | 0.8602 ± 0.0027 | 0.8060 ± 0.0106 |
+| Random context + gate | 0.8034 ± 0.0462 | 0.7345 ± 0.0241 |
+| **Pseudo-group context + gate (Ours)** | **0.9017 ± 0.0192** | **0.8628 ± 0.0183** |
+
 
 For external evaluation on LIDC-IDRI, the IQ-OTH/NCCD-trained model was directly applied without retraining or fine-tuning.
 
