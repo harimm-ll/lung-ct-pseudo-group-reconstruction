@@ -129,8 +129,8 @@ Using reconstructed pseudo-groups as indivisible partitioning units substantiall
 |---|---:|---:|
 | DINOv2 HSR @ 0.98 | 19.63% | **0.00%** |
 | ResNet50 HSR @ 0.98 | 32.42% | **0.00%** |
-| pHash HSR | 82.65% | **5.48%** |
-| SSIM HSR @ 0.95 | 88.58% | **4.11%** |
+| pHash HSR | 82.65% | **5.53%** |
+| SSIM HSR @ 0.95 | 88.58% | **4.15%** |
 
 The same overall pattern was independently reproduced on LIDC-IDRI using true case-disjoint partitioning.
 
