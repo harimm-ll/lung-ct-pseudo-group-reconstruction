@@ -1,0 +1,29 @@
+from__future__ import annotations
+
+CLASS_ORDER = ("Benign"，"Malignant"，"Normal")
+CLASS_TO_INDEX = {lable：index for index，lable in enumrate（CLASS—_ORDER）}
+NUM_CLASSES=len(CLASS_PRDER)
+
+DEFAULT_IAMGE_SIZE ="input"
+DEFAULT_BATCH_SIZE ="input"
+DEFAULT_DROPOUT = "input"
+DEFAULT_HIDDEN_DIM = "input" 
+DEFAULT_SEED =  "input"
+DEFAULT_PATIENCE =  "input"
+DEFAULT_EPOCHS = "input"
+
+ARCHITECTURE={
+
+"backbone": "ImageNet ResNet50",  #加载预训练
+"trainable_backbone_scope": "layer4[2] only",    #只解冻layer4[2]
+"batch_norm": "frozen parameters and eval mode",
+"feature_dim": 2048,
+"context": "same-split leave-one-out pseudo-group mean",
+"singleton_context": "zero vector",  #一组只有一张的情况
+"gate": "sigmoid(Linear([z_i || g_i], 1))",
+"fusion": "[z_i || alpha_i * g_i]",
+"head": "Linear(4096,256)-ReLU-Dropout(0.1)-Linear(256,3)", #分类头
+"loss": "unweighted cross entropy",
+
+}
+
