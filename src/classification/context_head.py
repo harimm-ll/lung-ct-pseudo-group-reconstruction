@@ -1,5 +1,3 @@
-"""Pseudo-group context gated classification head."""
-
 from __future__ import annotations
 
 import torch
@@ -7,13 +5,7 @@ from torch import nn
 
 
 class GatedContextHead(nn.Module):
-    """
-    Sample-level gated context fusion.
-
-    alpha_i = sigmoid(W_g [z_i || g_i] + b_g)
-    gated_context = alpha_i * g_i
-    prediction = C([z_i || gated_context])
-    """
+    #拼接逻辑
 
     def __init__(
         self,
@@ -23,11 +15,8 @@ class GatedContextHead(nn.Module):
         num_classes: int = 3,
     ) -> None:
         super().__init__()
-
         fused_dim = feature_dim * 2
-
         self.gate = nn.Linear(fused_dim, 1)
-
         self.classifier = nn.Sequential(
             nn.Linear(fused_dim, hidden_dim),
             nn.ReLU(inplace=True),
@@ -39,33 +28,13 @@ class GatedContextHead(nn.Module):
         self,
         target_features: torch.Tensor,
         context_features: torch.Tensor,
-    ) -> torch.Tensor:
-
+        return_gate: bool = False,
+    ) -> torch.Tensor | tuple[torch.Tensor, torch.Tensor]:
         if target_features.shape != context_features.shape:
-            raise ValueError(
-                "target_features and context_features must have the same shape"
-            )
+            raise ValueError("target_features and context_features must have equal shape")
+        gate_input = torch.cat((target_features, context_features), dim=1)
+        alpha = torch.sigmoid(self.gate(gate_input))
+        fused = torch.cat((target_features, alpha * context_features), dim=1)
+        logits = self.classifier(fused)
+        return (logits, alpha) if return_gate else logits
 
-        # [z_i || g_i]
-        gate_input = torch.cat(
-            (target_features, context_features),
-            dim=1,
-        )
-
-        # alpha_i = sigmoid(W_g [z_i || g_i] + b_g)
-        alpha = torch.sigmoid(
-            self.gate(gate_input)
-        )
-
-        # g_tilde_i = alpha_i * g_i
-        gated_context = (
-            alpha * context_features
-        )
-
-        # [z_i || g_tilde_i]
-        fused = torch.cat(
-            (target_features, gated_context),
-            dim=1,
-        )
-
-        return self.classifier(fused)
